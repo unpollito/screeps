@@ -1,10 +1,6 @@
-const cpu = require("./common.cpu");
-
 const reassignOrKillCreepsInWrongRoleEvery10Ticks = function(creepAndRoleAssignations) {
     if (Game.time % 10 === 7) {
         reassignOrKillCreepsInWrongRole(creepAndRoleAssignations);
-        console.log("Updated creep roles");
-        cpu.printCpuUsage();
     }
 };
 
