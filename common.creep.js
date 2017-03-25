@@ -39,7 +39,24 @@ const getCreepNamesByRole = function() {
     return namesByRole;
 };
 
+const getNextCreepRole = function(creepAndRoleAssignations) {
+    const neededCreepsPerRole = creepAndRoleAssignations.neededCreepsPerRole;
+    let nextRole;
+    let proportion = 0;
+    for (let i = 0; i < roleDefinitions.length; i++) {
+        if (neededCreepsPerRole[roleDefinitions[i].name] > 0) {
+            const newProportion = neededCreepsPerRole[roleDefinitions[i].name] / roleDefinitions[i].max;
+            if (newProportion > proportion) {
+                proportion = newProportion;
+                nextRole = roleDefinitions[i].name;
+            }
+        }
+    }
+    return nextRole;
+};
+
 module.exports = {
     getCreepAndRoleAssignations: getCreepAndRoleAssignations,
-    getCreepNamesByRole: getCreepNamesByRole
+    getCreepNamesByRole: getCreepNamesByRole,
+    getNextCreepRole: getNextCreepRole
 };
