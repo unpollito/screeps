@@ -1,4 +1,4 @@
-const creepCommon = require("./creep.common");
+const creepCommon = require("./common.creep");
 const creepActionRunner = require("./creep.actionRunner");
 const creepReassign = require("./creep.reassign");
 const creepSpawn = require("./creep.spawn");

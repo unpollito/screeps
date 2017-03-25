@@ -1,7 +1,7 @@
 const roleDefinitions = require("./role.definitions");
 
 const getCreepAndRoleAssignations = function() {
-    const creepNamesByRole = getCreepNamesByRole(roleDefinitions);
+    const creepNamesByRole = getCreepNamesByRole();
     let creepsInWrongRole = [];
     const neededCreepsPerRole = {};
 
@@ -20,7 +20,7 @@ const getCreepAndRoleAssignations = function() {
     };
 };
 
-const getCreepNamesByRole = function(roleDefinitions) {
+const getCreepNamesByRole = function() {
     const namesByRole = {};
     const names = Object.keys(Game.creeps);
     names.map(function(name) {
@@ -40,5 +40,6 @@ const getCreepNamesByRole = function(roleDefinitions) {
 };
 
 module.exports = {
-    getCreepAndRoleAssignations: getCreepAndRoleAssignations
+    getCreepAndRoleAssignations: getCreepAndRoleAssignations,
+    getCreepNamesByRole: getCreepNamesByRole
 };

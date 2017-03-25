@@ -1,5 +1,6 @@
 const roleDefinitions = require("./role.definitions");
 const commonEnergy = require("./common.energy");
+const commonCreep = require("./common.creep");
 
 const spawn = function(creepAndRoleAssignations) {
     const lastCreepId = Memory.lastCreepId || 0;
@@ -32,8 +33,15 @@ const spawn = function(creepAndRoleAssignations) {
 };
 
 const getNewCreepParts = function() {
-    const partsPerType = Object.keys(Game.creeps).length > 0
-        ? Math.floor(commonEnergy.getRoomTotalCapacity(Game.rooms["W77N88"]) / 200) : 1;
+    let partsPerType;
+    if (commonCreep.getCreepNamesByRole().harvester.length > 0) {
+        partsPerType = Math.floor(commonEnergy.getRoomTotalCapacity(Game.rooms["W77N88"]) / 200);
+    } else {
+        partsPerType = Math.floor(commonEnergy.getRoomTotalEnergy(Game.rooms["W77N88"]) / 200);
+        if (partsPerType === 0) {
+            partsPerType = 1;
+        }
+    }
     let parts = new Array(3 * partsPerType);
     let i;
     for (i = 0; i < partsPerType; i++) {
