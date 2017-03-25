@@ -38,7 +38,7 @@ const doStorage = function(creep) {
     }
     const transferResult = creep.transfer(target, RESOURCE_ENERGY);
     if (transferResult === ERR_NOT_IN_RANGE) {
-        creep.moveTo(target.pos, {visualizePathStyle: {stroke: "#fff"}});
+        creep.moveTo(target.pos, {visualizePathStyle: {stroke: "#fff", opacity: 0.2}});
     } else {
         if (transferResult === OK) {
             creep.carry.energy -= (target.energyCapacity - target.energy);
