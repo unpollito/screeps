@@ -44,11 +44,12 @@ const getNextCreepRole = function(creepAndRoleAssignations) {
     let nextRole;
     let proportion = 0;
     for (let i = 0; i < roleDefinitions.length; i++) {
-        if (neededCreepsPerRole[roleDefinitions[i].name] > 0) {
-            const newProportion = neededCreepsPerRole[roleDefinitions[i].name] / roleDefinitions[i].max;
+        const roleName = roleDefinitions[i].name;
+        if (neededCreepsPerRole[roleName] > 0) {
+            const newProportion = neededCreepsPerRole[roleName] / roleDefinitions[i].max;
             if (newProportion > proportion) {
                 proportion = newProportion;
-                nextRole = roleDefinitions[i].name;
+                nextRole = roleName;
             }
         }
     }
