@@ -24,14 +24,10 @@ const setNextStorageTarget = function(creep) {
             Memory.storageLevels[targetId] = target.energy + creep.carry.energy;
         }
         creep.memory.storageTarget = targetId;
-        console.log("creep " + creep.name + " storing energy in " + target.pos.x + ", " + target.pos.y);
-    } else {
-        console.log("No structures with expected energy needs!");
     }
 };
 
 const clearCreepTargets = function() {
-    console.log("clearing creep targets");
     Memory.storageLevels = {};
     for (let creepName in Game.creeps) {
         if (Game.creeps.hasOwnProperty(creepName)) {
