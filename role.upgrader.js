@@ -5,7 +5,7 @@ const harvest = function(creep) {
     } else {
         const sources = creep.room.find(FIND_SOURCES);
         if (creep.harvest(sources[1]) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(sources[1]);
+            creep.moveTo(sources[1], {visualizePathStyle: {stroke: "#0f0"}});
         }
     }
 };
@@ -16,7 +16,7 @@ const upgrade = function(creep) {
         harvest(creep);
     } else {
         if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.controller);
+            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: "#0ff", opacity: 0.2}});
         }
     }
 };

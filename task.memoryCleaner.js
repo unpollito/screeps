@@ -13,7 +13,6 @@ const cleanMemory = function() {
     for (let index in keys) {
         if (!Game.creeps[keys[index]]) {
             delete Memory.creeps[keys[index]];
-            console.log("Deleting reference to dead creep " + keys[index]);
         }
     }
 };

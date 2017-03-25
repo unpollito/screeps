@@ -16,7 +16,7 @@ const builderRole = {
             if (targets.length) {
                 const target = creep.pos.findClosestByPath(targets);
                 if (creep.build(target) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target, {visualizePathStyle: {stroke: "#ffffff"}});
+                    creep.moveTo(target, {visualizePathStyle: {stroke: "#f00", opacity: 0.2}});
                 }
             } else {
                 creep.memory.building = false;

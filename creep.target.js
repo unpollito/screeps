@@ -7,7 +7,11 @@ const setNextStorageTarget = function(creep) {
         return;
     }
 
-    const targets = creep.room.find(FIND_MY_STRUCTURES, {
+    sendCreepToClosestTarget(creep, getPossibleStorageTargets(creep));
+};
+
+const getPossibleStorageTargets = function(creep) {
+    return creep.room.find(FIND_MY_STRUCTURES, {
         filter: (structure) => {
             const rightType = structure.structureType === STRUCTURE_EXTENSION
                 || structure.structureType === STRUCTURE_SPAWN;
@@ -15,6 +19,9 @@ const setNextStorageTarget = function(creep) {
             return rightType && energy < structure.energyCapacity;
         }
     });
+};
+
+const sendCreepToClosestTarget = function(creep, targets) {
     if (targets.length > 0) {
         const target = creep.pos.findClosestByPath(targets);
         const targetId = target.id;

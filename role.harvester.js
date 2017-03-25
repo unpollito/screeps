@@ -23,7 +23,7 @@ const doHarvest = function(creep) {
     if (sources.length === 0) {
         creep.memory.harvesting = false;
     } else if (creep.harvest(sources[0]) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(sources[0], {visualizePathStyle: {stroke: "#ffff00"}});
+        creep.moveTo(sources[0], {visualizePathStyle: {stroke: "#0f0", opacity: 0.2}});
     }
 };
 
@@ -38,7 +38,7 @@ const doStorage = function(creep) {
     }
     const transferResult = creep.transfer(target, RESOURCE_ENERGY);
     if (transferResult === ERR_NOT_IN_RANGE) {
-        creep.moveTo(target.pos, {visualizePathStyle: {stroke: "#ff9900"}});
+        creep.moveTo(target.pos, {visualizePathStyle: {stroke: "#fff"}});
     } else {
         if (transferResult === OK) {
             creep.carry.energy -= (target.energyCapacity - target.energy);
