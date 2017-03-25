@@ -1,3 +1,5 @@
+const creepTarget = require("./creep.target");
+
 const harvesterRole = {
     run: function(creep) {
         if (creep.memory.harvesting === true) {
@@ -21,24 +23,30 @@ const doHarvest = function(creep) {
     if (sources.length === 0) {
         creep.memory.harvesting = false;
     } else if (creep.harvest(sources[0]) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(sources[0], {visualizePathStyle: {stroke: "#ffaa00"}});
+        creep.moveTo(sources[0], {visualizePathStyle: {stroke: "#ffff00"}});
     }
 };
 
 const doStorage = function(creep) {
-    const targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-            const rightType = structure.structureType === STRUCTURE_EXTENSION
-                || structure.structureType === STRUCTURE_SPAWN;
-            return rightType && structure.energy < structure.energyCapacity;
-        }
-    });
-    if (targets.length > 0) {
-        if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(targets[0], {visualizePathStyle: {stroke: "#ffffff"}});
-        }
-    } else {
+    let target = Game.getObjectById(creep.memory.storageTarget);
+    if (target && target.energy === target.energyCapacity || target === null) {
+        creepTarget.setNextStorageTarget(creep);
+        target = Game.getObjectById(creep.memory.storageTarget);
+    }
+    if (!creep.memory.storageTarget) {
         creep.memory.harvesting = true;
+    }
+    const transferResult = creep.transfer(target, RESOURCE_ENERGY);
+    if (transferResult === ERR_NOT_IN_RANGE) {
+        creep.moveTo(target.pos, {visualizePathStyle: {stroke: "#ff9900"}});
+    } else {
+        if (transferResult === OK) {
+            creep.carry.energy -= (target.energyCapacity - target.energy);
+        }
+        creepTarget.setNextStorageTarget(creep);
+        if (!creep.memory.storageTarget) {
+            creep.memory.harvesting = true;
+        }
     }
 };
 

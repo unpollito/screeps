@@ -5,7 +5,7 @@ const roleBuilder = require("./role.builder");
 const roleDefinitions = [
     {
         name: "harvester",
-        max: 4,
+        max: 3,
         run: roleHarvester.run
     },
     {
@@ -15,7 +15,7 @@ const roleDefinitions = [
     },
     {
         name: "builder",
-        max: 4,
+        max: 3,
         run: roleBuilder.run
     }
 ];

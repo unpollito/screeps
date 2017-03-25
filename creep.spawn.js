@@ -1,5 +1,6 @@
 const commonEnergy = require("./common.energy");
 const commonCreep = require("./common.creep");
+const creepTarget = require("./creep.target");
 
 const spawn = function(creepAndRoleAssignations) {
     const lastCreepId = Memory.lastCreepId || 0;
@@ -18,6 +19,7 @@ const spawn = function(creepAndRoleAssignations) {
         if (spawnResult === name) {
             console.log("Creating creep with role " + nextRole + " and " + newCreepParts.length + " parts");
             Memory.lastCreepId = lastCreepId + 1;
+            creepTarget.clearCreepTargets();
         } else {
             console.log("Spawn failed with code " + spawnResult);
         }
