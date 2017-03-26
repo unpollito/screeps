@@ -46,18 +46,16 @@ const findNextRepairTarget = function(creep) {
     if (structures.length === 0) {
         return null;
     }
-    const mostDamagedStructures = [];
-    for (let i = 1; i <= 20; i++) {
-        for (let j = 0; j < structures.length; j++) {
-            if (structures[j].hits / structures[j].hitsMax <= i / 20) {
-                mostDamagedStructures.push(structures[j]);
-            }
-        }
-        if (mostDamagedStructures.length > 0) {
-            return creep.pos.findClosestByPath(mostDamagedStructures);
+
+    let minHits = Number.POSITIVE_INFINITY;
+    let structure = null;
+    for (let i = 0; i < structures.length; i++) {
+        if (structures[i].hits < minHits) {
+            minHits = structures[i].hits;
+            structure = structures[i];
         }
     }
-    return null;
+    return structure;
 };
 
 module.exports = repairerRole;
