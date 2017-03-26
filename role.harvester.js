@@ -35,6 +35,7 @@ const doStorage = function(creep) {
     }
     if (!creep.memory.storageTarget) {
         creep.memory.harvesting = true;
+        return;
     }
     const transferResult = creep.transfer(target, RESOURCE_ENERGY);
     if (transferResult === ERR_NOT_IN_RANGE) {

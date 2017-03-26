@@ -1,3 +1,5 @@
+const cpu = require("./common.cpu");
+
 const setNextStorageTarget = function(creep) {
     if (!Memory.storageLevels) {
         Memory.storageLevels = {};
@@ -24,13 +26,15 @@ const getPossibleStorageTargets = function(creep) {
 const sendCreepToClosestTarget = function(creep, targets) {
     if (targets.length > 0) {
         const target = creep.pos.findClosestByPath(targets);
-        const targetId = target.id;
-        if (Memory.storageLevels[targetId] && Memory.storageLevels[targetId] !== null) {
-            Memory.storageLevels[targetId] += creep.carry.energy;
-        } else {
-            Memory.storageLevels[targetId] = target.energy + creep.carry.energy;
+        if (target !== null) {
+            const targetId = target.id;
+            if (Memory.storageLevels[targetId] && Memory.storageLevels[targetId] !== null) {
+                Memory.storageLevels[targetId] += creep.carry.energy;
+            } else {
+                Memory.storageLevels[targetId] = target.energy + creep.carry.energy;
+            }
+            creep.memory.storageTarget = targetId;
         }
-        creep.memory.storageTarget = targetId;
     }
 };
 
@@ -48,6 +52,7 @@ const clearCreepTargetsAfter100Ticks = function() {
     if (!Memory.creepTargetsLastDeletedAt || Game.time - Memory.creepTargetsLastDeletedAt >= 100) {
         clearCreepTargets();
         console.log("creep targets cleared after 100 ticks");
+        cpu.printCpuUsage();
     }
 };
 
