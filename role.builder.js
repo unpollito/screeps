@@ -1,4 +1,4 @@
-const harvesterRole = require("./role.harvester");
+const repairerRole = require("./role.repairer");
 
 const builderRole = {
     run: function(creep) {
@@ -8,7 +8,7 @@ const builderRole = {
         if (creep.memory.building || creep.carry.energy === creep.carryCapacity) {
             buildIfThereAreConstructionSites(creep);
         } else {
-            harvesterRole.run(creep);
+            repairerRole.run(creep);
         }
     }
 };
@@ -25,7 +25,7 @@ const buildIfThereAreConstructionSites = function(creep) {
         }
     } else {
         creep.memory.building = false;
-        harvesterRole.run(creep);
+        repairerRole.run(creep);
     }
 };
 

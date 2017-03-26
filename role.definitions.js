@@ -10,7 +10,7 @@ const roleDefinitions = [
     },
     {
         name: "upgrader",
-        max: 10,
+        max: 9,
         run: roleUpgrader.run
     },
     {

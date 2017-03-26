@@ -30,6 +30,9 @@ const getNewCreepParts = function() {
     let partsPerType;
     if (commonCreep.getCreepNamesByRole()["harvester"].length > 0) {
         partsPerType = Math.floor(commonEnergy.getRoomTotalCapacity(Game.rooms["W77N88"]) / 200);
+        if (partsPerType > 3) {
+            partsPerType = 3;
+        }
     } else {
         partsPerType = Math.floor(commonEnergy.getRoomTotalEnergy(Game.rooms["W77N88"]) / 200);
         if (partsPerType === 0) {
