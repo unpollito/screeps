@@ -5,6 +5,7 @@ const harvesterRole = {
     run: function(creep) {
         if (creep.memory.harvesting === true) {
             if (creep.carry.energy < creep.carryCapacity) {
+                creep.memory.lastTurn = "harvester";
                 doHarvest(creep);
             } else {
                 creep.memory.harvesting = false;
@@ -34,14 +35,21 @@ const doStorage = function(creep) {
         creepTarget.setNextStorageTarget(creep);
         target = Game.getObjectById(creep.memory.storageTarget);
     }
+
     if (!creep.memory.storageTarget) {
-        if (creep.carry.energy < creep.carryCapacity) {
-            creep.memory.harvesting = true;
-        } else if (creep.memory.role !== "upgrader") {
+        const shouldUpgrade = creep.memory.lastTurn !== "upgrader" && creep.carry.energy === creep.carryCapacity
+            || creep.memory.lastTurn === "upgrader" && creep.carry.energy > 0;
+        if (shouldUpgrade) {
+            creep.memory.lastTurn = "upgrader";
             upgraderRole.run(creep);
+        } else {
+            creep.memory.lastTurn = "harvester";
+            creep.memory.harvesting = true;
         }
         return;
     }
+
+    creep.memory.lastTurn = "harvester";
     const transferResult = creep.transfer(target, RESOURCE_ENERGY);
     if (transferResult === ERR_NOT_IN_RANGE) {
         creep.moveTo(target.pos, {visualizePathStyle: {stroke: "#fff", opacity: 0.2}});
