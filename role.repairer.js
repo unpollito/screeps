@@ -22,8 +22,8 @@ const performRepairIfPossible = function(creep) {
         target = findNextRepairTarget(creep);
     } else {
         target = Game.getObjectById(creep.memory.repairTarget);
-        if (target.hits === target.hitsMax) {
-            target = findNextRepairTarget()
+        if (target && target.hits === target.hitsMax) {
+            target = findNextRepairTarget(creep)
         }
     }
 
@@ -40,8 +40,9 @@ const performRepairIfPossible = function(creep) {
 
 const findNextRepairTarget = function(creep) {
     const structures = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-        const rightType = structure.structureType === STRUCTURE_WALL || structure.my;
-        return rightType && structure.hits < structure.hitsMax;
+        const rightType = structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_ROAD
+            || structure.my;
+        return rightType && structure.hits < structure.hitsMax / 2;
     }});
     if (structures.length === 0) {
         return null;
