@@ -8,7 +8,9 @@ const builderRole = {
         if (creep.memory.building || creep.carry.energy === creep.carryCapacity) {
             buildIfThereAreConstructionSites(creep);
         } else {
-            repairerRole.run(creep);
+            if (creep.memory.role !== "repairer") {
+                repairerRole.run(creep);
+            }
         }
     }
 };
@@ -25,7 +27,9 @@ const buildIfThereAreConstructionSites = function(creep) {
         }
     } else {
         creep.memory.building = false;
-        repairerRole.run(creep);
+        if (creep.memory.role !== "repairer") {
+            repairerRole.run(creep);
+        }
     }
 };
 

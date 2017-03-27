@@ -11,7 +11,9 @@ const repairerRole = {
             performRepairIfPossible(creep);
         } else {
             creep.memory.repairing = false;
-            harvesterRole.run(creep);
+            if (creep.memory.role !== "harvester") {
+                harvesterRole.run(creep);
+            }
         }
     }
 };
@@ -28,7 +30,9 @@ const performRepairIfPossible = function(creep) {
     }
 
     if (target === null) {
-        harvesterRole.run(creep);
+        if (creep.memory.role !== "harvester") {
+            harvesterRole.run(creep);
+        }
     } else {
         creep.memory.repairTarget = target.id;
         if (creep.repair(target) === ERR_NOT_IN_RANGE) {

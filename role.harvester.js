@@ -1,4 +1,5 @@
 const creepTarget = require("./creep.target");
+const upgraderRole = require("./role.upgrader");
 
 const harvesterRole = {
     run: function(creep) {
@@ -34,7 +35,11 @@ const doStorage = function(creep) {
         target = Game.getObjectById(creep.memory.storageTarget);
     }
     if (!creep.memory.storageTarget) {
-        creep.memory.harvesting = true;
+        if (creep.carry.energy < creep.carryCapacity) {
+            creep.memory.harvesting = true;
+        } else if (creep.memory.role !== "upgrader") {
+            upgraderRole.run(creep);
+        }
         return;
     }
     const transferResult = creep.transfer(target, RESOURCE_ENERGY);
