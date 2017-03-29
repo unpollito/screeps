@@ -1,7 +1,9 @@
-const harvest = function(creep) {
+const harvest = function(creep, upgradeFailed) {
     if (creep.carry.energy === creep.carryCapacity) {
         creep.memory.harvesting = false;
-        upgrade(creep);
+        if (!upgradeFailed) {
+            upgrade(creep, true);
+        }
     } else {
         const sources = creep.room.find(FIND_SOURCES);
         if (creep.harvest(sources[1]) === ERR_NOT_IN_RANGE) {
@@ -10,10 +12,12 @@ const harvest = function(creep) {
     }
 };
 
-const upgrade = function(creep) {
+const upgrade = function(creep, harvestFailed) {
     if (creep.carry.energy === 0) {
         creep.memory.harvesting = true;
-        harvest(creep);
+        if (!harvestFailed) {
+            harvest(creep, true);
+        }
     } else {
         if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
             creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: "#0ff", opacity: 0.2}});
